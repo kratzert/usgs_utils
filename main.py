@@ -97,12 +97,11 @@ def main(cfg: Dict):
     jobs = create_jobs(config)
 
     # spawn threads
-    #pool = Threadpool(cfg["threads"])
-    for job in jobs:
-        process_job(job)
+    pool = Threadpool(cfg["threads"])
+
     # process jobs in parallel
-    #for _ in tqdm(pool.imap_unordered(process_job, jobs), total=len(jobs)):
-    #    pass
+    for _ in tqdm(pool.imap_unordered(process_job, jobs), total=len(jobs)):
+        pass
 
 
 if __name__ == "__main__":
