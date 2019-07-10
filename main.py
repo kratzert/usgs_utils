@@ -65,7 +65,6 @@ def get_usgs_data(job: Dict) -> pd.DataFrame:
 
         # create data frame
         df = pd.DataFrame({'discharge': discharge}, index=pd.DatetimeIndex(dates))
-        df = df.set_index('datetime')
 
         return df
 
