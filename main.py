@@ -37,6 +37,14 @@ def create_jobs(cfg: Dict) -> List:
         basins = fp.readlines()
     basins = [b.strip() for b in basins]
 
+    # check for already downloaded data
+    download_dir = Path(__file__).absolute().parent / 'downloads'
+    downloaded_files = list(download_dir.glob('*.p'))
+    downloaded_basins = [f.name[:8] for f in downloaded_files]
+
+    # remove these basins from the list
+    basins = [b for b in basins if b not in downloaded_basins]
+
     jobs = []
     for basin in basins:
         job = {'station': basin, 'start_date': cfg["start_date"], 'end_date': cfg["end_date"]}
