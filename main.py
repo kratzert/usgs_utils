@@ -73,18 +73,18 @@ def get_usgs_data(job: Dict) -> pd.DataFrame:
 
         # create data frame
         df = pd.DataFrame({'discharge': discharge}, index=pd.DatetimeIndex(dates))
-        df = df.set_index('datetime')
 
         return df
 
 
 def store_data(df: pd.DataFrame, station: str):
-    out_file = Path().absolute() / "downloads" / f"{station}_hourly_discharge.nc"
-    if not out_file.parent.is_dir():
-        out_file.parent.mkdir(parents=True)
-    arr = xarray.Dataset.from_dataframe(df)
-    arr.to_netcdf(out_file)
-
+    out_file = Path().absolute() / "downloads" / f"{station}_hourly_discharge.p"
+    #if not out_file.parent.is_dir():
+    #    out_file.parent.mkdir(parents=True)
+    #arr = xarray.Dataset.from_dataframe(df)
+    #arr.to_netcdf(out_file)
+    df.to_pickle(out_file, compression='gzip')
+              
 
 def process_job(job: Dict):
     df = get_usgs_data(job)
